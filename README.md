@@ -1,4 +1,4 @@
-# Desafios-Python
+# Desafio 1
 # Desafios de Python - Prof. Max
 
 funcionarios = []
