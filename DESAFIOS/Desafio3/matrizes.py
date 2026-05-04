@@ -1,82 +1,79 @@
 import random
 
-matriz = []
+matriz_aleatoria = [[random.randint(0, 10) for _ in range(3)] for _ in range(3)]
 
-for i in range(3):
-    linha = []
-    for j in range(3):
-        linha.append(random.randint(0, 10))
-    matriz.append(linha)
-
-print("Matriz 3x3 aleatória:")
-for linha in matriz:
+print("--- Matriz 3x3 Aleatória ---")
+for linha in matriz_aleatoria:
     print(linha)
 
-A = [[10, 20, 30],
-     [15, 25, 35]]
+vendas_loja_a = [[10, 20, 30],
+                 [15, 25, 35]]
 
-B = [[5, 10, 15],
-     [10, 5, 10]]
+vendas_loja_b = [[5, 10, 15],
+                 [10, 5, 10]]
 
-soma = []
+soma_vendas = [
+    [a + b for a, b in zip(linha_a, linha_b)]
+    for linha_a, linha_b in zip(vendas_loja_a, vendas_loja_b)
+]
 
-for i in range(len(A)):
-    linha = []
-    for j in range(len(A[0])):
-        linha.append(A[i][j] + B[i][j])
-    soma.append(linha)
-
-print("\nSoma das matrizes (vendas):")
-for linha in soma:
+print("\n--- Soma das Matrizes (Vendas Consolidadas) ---")
+for linha in soma_vendas:
     print(linha)
 
-total_vendas = sum(sum(linha) for linha in soma)
-print("Total de vendas:", total_vendas)
+total_geral = sum(sum(linha) for linha in soma_vendas)
+print(f"Total de vendas: {total_geral}")
 
-import numpy as np
-
-alunos = np.array([
+notas_estudantes = [
     [8.5, 7.0, 9.0],
     [6.0, 5.5, 7.0],
     [9.0, 8.5, 10.0]
-])
+]
 
-medias = alunos.mean(axis=1)
+medias_finais = [round(sum(aluno) / len(aluno), 2) for aluno in notas_estudantes]
 
-print("\nMédias dos alunos:")
-print(medias)
+print("\n--- Médias dos Alunos ---")
+print(medias_finais)
 
-matriz_det = np.array([
+matriz_sistema = [
     [2, 1, 3],
     [1, 0, 2],
     [4, 1, 8]
-])
+]
 
-det = np.linalg.det(matriz_det)
+m = matriz_sistema
+determinante = (m[0][0] * (m[1][1] * m[2][2] - m[1][2] * m[2][1]) -
+                m[0][1] * (m[1][0] * m[2][2] - m[1][2] * m[2][0]) +
+                m[0][2] * (m[1][0] * m[2][1] - m[1][1] * m[2][0]))
 
-print("\nDeterminante:", det)
+print(f"\n--- Determinante: {determinante} ---")
 
-if det != 0:
-    print("Sistema resolvível (matriz invertível)")
+if determinante != 0:
+    print("Status: Sistema resolvível (matriz invertível)")
 else:
-    print("Sistema NÃO resolvível (matriz singular)")
+    print("Status: Sistema NÃO resolvível (matriz singular)")
 
-estoque = np.array([
+tabela_estoque = [
     [10, 20],
     [30, 40],
     [50, 60]
-])
+]
 
-precos = np.array([
+tabela_precos = [
     [2, 3, 4]
-])
+]
 
-estoque_T = estoque.T
+estoque_transposto = [list(linha) for linha in zip(*tabela_estoque)]
 
-total = np.dot(precos, estoque_T)
+valor_total = [
+    [sum(a * b for a, b in zip(linha_preco, coluna_estoque)) for coluna_estoque in zip(*estoque_transposto)]
+    for linha_preco in tabela_precos
+]
 
-print("\nEstoque transposto:")
-print(estoque_T)
+print("\n--- Estoque Transposto ---")
+for linha in estoque_transposto:
+    print(linha)
 
-print("\nTotal calculado:")
-print(total)
+print("\n--- Valor Total Calculado ---")
+for linha in valor_total:
+    print(linha)
